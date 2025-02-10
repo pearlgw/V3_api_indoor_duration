@@ -11,12 +11,21 @@ from routes.assistant import assistant_router
 from routes.encrypted_images import encrypted_image
 from model.user_token import UserToken
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
 
 version = "3"
 app = FastAPI(
     title="Indoor Duration App Reborn",
     description=f"Api Indoor Duration Reborn version {version}",
     version=version
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 SQLModel.metadata.create_all(engine)
