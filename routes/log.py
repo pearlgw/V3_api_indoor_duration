@@ -8,7 +8,7 @@ from utils.utils import get_current_user, format_response
 log_router = APIRouter()
 
 @log_router.get("/")
-def get_all_person_duration(
+def get_all_logs_activity(
     db: Session = Depends(get_db),
     current_user: dict = Depends(get_current_user)
 ):
