@@ -1,5 +1,5 @@
 from datetime import datetime
-import json
+from fastapi import status
 from uuid import UUID
 from dotenv import load_dotenv
 from fastapi import HTTPException, Depends
@@ -42,3 +42,21 @@ def create_user_service(nim, fullname, address, email, password, image, db: Sess
     db.refresh(new_user)
     
     return new_user
+
+def fetch_all_service(db: Session):
+    query = select(User).where(User.roles == 'user')
+    result = db.execute(query)
+    user_assistans = result.scalars().all()
+    return user_assistans
+
+def update_status_embed_service(uid_assistant, db:Session):
+    data_assistant = db.query(User).filter(User.uid == uid_assistant).first()
+    
+    if not data_assistant:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Data tidak ditemukan")
+    
+    data_assistant.status_embed = True
+    
+    db.commit()
+    
+    return data_assistant

@@ -41,6 +41,7 @@ def upgrade() -> None:
     sa.Column('is_verified', sa.String(), nullable=True),
     sa.Column('token', sa.String(), nullable=True),
     sa.Column('created_at', postgresql.TIMESTAMP(), nullable=True),
+    sa.Column('status_embed', sa.Boolean(), server_default='false', nullable=False),
     sa.PrimaryKeyConstraint('uid')
     )
     # ### end Alembic commands ###

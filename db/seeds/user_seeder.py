@@ -12,7 +12,8 @@ def seed_users(db: Session):
             "hashed_password": hash_password("password"),
             "image": "y",
             "roles": "admin",
-            "token": 1309
+            "token": 1309,
+            "status_embed": True
         },
         {
             "nim": "b11.1111.11111",
@@ -22,7 +23,8 @@ def seed_users(db: Session):
             "hashed_password": hash_password("password"),
             "image": "y",
             "roles": "user",
-            "token": 1309
+            "token": 1309,
+            "status_embed": True
         },
     ]
     

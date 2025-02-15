@@ -12,6 +12,7 @@ from routes.encrypted_images import encrypted_image
 from model.user_token import UserToken
 from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware
+from db.seeds import seed_all
 
 version = "3"
 app = FastAPI(
@@ -51,6 +52,9 @@ def start_cleanup_thread():
 @app.on_event("startup")
 def startup_event():
     start_cleanup_thread()
+    
+    # with Session(engine) as db:
+    #     seed_all(db)
 
 app.include_router(auth_router, prefix=f"/api/{version}/auth", tags=["Auth"])
 app.include_router(admin_router, prefix=f"/api/{version}/admin", tags=["Admin"])

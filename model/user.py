@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel, Field, Column
+from sqlmodel import SQLModel, Field, Column, Boolean
 import sqlalchemy.dialects.postgresql as pg
 from uuid import UUID
 import uuid
@@ -28,5 +28,8 @@ class User(SQLModel, table=True):
     ))
     is_verified: bool = Field(sa_column=Column(nullable=True))
     token: int = Field(max_length=5, sa_column=Column(default=random_token_user))
+    status_embed: bool = Field(
+        sa_column=Column(Boolean, server_default="false", nullable=False)
+    )
     created_at: datetime = Field(sa_column=Column(pg.TIMESTAMP, default=datetime.now))
     
