@@ -72,7 +72,7 @@ def update_status_embed(
         raise HTTPException(status_code=403, detail="Akses hanya untuk admin")
     
     try:
-        user_assistant = update_status_embed_service(uid_assistant, db)
+        user_assistant = update_status_embed_service(uid_assistant, db, current_user)
         return format_response(status.HTTP_200_OK, "Berhasil", user_assistant)
     
     except Exception as e:

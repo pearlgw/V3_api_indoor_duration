@@ -49,7 +49,7 @@ def fetch_all_service(db: Session):
     user_assistans = result.scalars().all()
     return user_assistans
 
-def update_status_embed_service(uid_assistant, db:Session):
+def update_status_embed_service(uid_assistant, db:Session, current_user):
     data_assistant = db.query(User).filter(User.uid == uid_assistant).first()
     
     if not data_assistant:
@@ -57,6 +57,13 @@ def update_status_embed_service(uid_assistant, db:Session):
     
     data_assistant.status_embed = True
     
-    db.commit()
+    log_fullname = current_user.get("fullname")
+    action_data = f"{log_fullname} updated status_embed user assistant: {data_assistant.dict()}"
+    format_all_logs(db, log_fullname, action_data)
     
-    return data_assistant
+    db.commit()
+    return {
+        "uid": data_assistant.uid,
+        "fullname": data_assistant.fullname,
+        "status_embed": data_assistant.status_embed
+    }
